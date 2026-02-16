@@ -1,1 +1,94 @@
-/* You can add global styles to this file, and also import other style files */
+/* ================================
+   Global Theme — Song Suggester
+   ================================ */
+
+:root {
+  /* Core colors */
+  --color-bg-main: #0b0b0b;
+  --color-bg-secondary: #151515;
+  --color-bg-elevated: #1c1c1c;
+
+  --color-text-main: #eaeaea;
+  --color-text-muted: #9a9a9a;
+
+  --color-accent: #b00020;
+  --color-accent-hover: #d0002d;
+
+  /* UI */
+  --border-subtle: #262626;
+}
+
+/* Reset (minimal, intentional) */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-bg-main);
+  color: var(--color-text-main);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography */
+h1,
+h2,
+h3 {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+p {
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Inputs */
+input,
+button {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+input:focus-visible {
+  outline: none;
+}
+
+/* Links */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection */
+::selection {
+  background: var(--color-accent);
+  color: white;
+}

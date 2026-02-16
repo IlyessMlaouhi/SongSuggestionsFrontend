@@ -1,0 +1,56 @@
+<nav class="navbar">
+  <div class="navbar-left">
+    <div class="logo" routerLink="/">
+      <span class="logo-icon">🎵</span>
+      <span class="logo-text" >SongSuggester</span>
+    </div>
+
+    <div class="navbar-links">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <span class="link-icon">🏠</span>
+        <span>Home</span>
+      </a>
+      <a routerLink="/discover" routerLinkActive="active">
+        <span class="link-icon">🔍</span>
+        <span>Discover</span>
+      </a>
+      <a routerLink="/playlists" routerLinkActive="active">
+        <span class="link-icon">🎧</span>
+        <span>Playlists</span>
+      </a>
+      <a routerLink="/friends" routerLinkActive="active">
+        <span class="link-icon">👥</span>
+        <span>Friends</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="navbar-right">
+    <!-- Authenticated User -->
+    <div class="navbar-auth" >
+      <button class="search-toggle">
+        <span>🔍</span>
+      </button>
+
+      <button class="notifications">
+        <span>🔔</span>
+        <span class="badge">3</span>
+      </button>
+      <button class="user-menu" routerLink="/profile">
+        <div class="user-avatar">
+          <span>IM</span>
+        </div>
+        <div class="user-info">
+          <span class="user-name">Ilyess </span>
+          <span class="user-status">Pro Member</span>
+        </div>
+      </button>
+    </div>
+
+    <!-- Guest User -->
+    <div class="navbar-auth" >
+      <a routerLink="/signin" class="btn-secondary">Login</a>
+      <a routerLink="/signup" class="btn-primary">Sign Up</a>
+    </div>
+  </div>
+</nav>
