@@ -48,9 +48,12 @@
     </div>
 
     <!-- Guest User -->
-    <div class="navbar-auth" >
-      <a routerLink="/signin" class="btn-secondary">Login</a>
+    <div class="navbar-auth" *ngIf="isLoggedIn">
+      <a routerLink="/signin" class="btn-primary">Login</a>
       <a routerLink="/signup" class="btn-primary">Sign Up</a>
+    </div>
+    <div class="navbar-auth" *ngIf="!isLoggedIn" >
+    <a routerLink="/signin" class="btn-primary">Logout</a>
     </div>
   </div>
 </nav>

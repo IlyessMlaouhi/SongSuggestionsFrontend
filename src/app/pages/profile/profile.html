@@ -1,12 +1,24 @@
 <section class="profile">
 
+  <!-- Cover Banner -->
+  <div class="profile-banner">
+    <div class="banner-overlay"></div>
+  </div>
+
   <!-- Header -->
   <header class="profile-header">
-    <div class="avatar"></div>
+    <div class="avatar">
+      <span class="avatar-text">IB</span>
+      <div class="avatar-badge">🎵</div>
+    </div>
 
     <div class="user-info">
-      <h1>ilyess</h1>
-      <p class="username">@ilyess</p>
+      <div class="user-main">
+        <h1>Ilyess Mlaouhi</h1>
+        <span class="verified-badge">✓ Pro</span>
+      </div>
+      <p class="username">@ilyess · Member since 2023</p>
+      <p class="bio">🎸 Rock enthusiast | 🎧 Playlist curator | 🌙 Night listener</p>
 
       <div class="stats">
         <div class="stat">
@@ -21,57 +33,401 @@
           <strong>128</strong>
           <span>Friends</span>
         </div>
+        <div class="stat">
+          <strong>24.5K</strong>
+          <span>Scrobbles</span>
+        </div>
+      </div>
+
+      <div class="profile-actions">
+        <button class="btn-primary">Edit Profile</button>
+        <button class="btn-secondary">Share</button>
       </div>
     </div>
   </header>
 
+  <!-- Quick Stats -->
+  <section class="quick-stats">
+    <div class="stat-card">
+      <div class="stat-icon">🎵</div>
+      <div class="stat-content">
+        <div class="stat-value">1,248</div>
+        <div class="stat-label">Songs This Month</div>
+        <div class="stat-trend positive">↑ 12% from last month</div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">⏱️</div>
+      <div class="stat-content">
+        <div class="stat-value">42h 18m</div>
+        <div class="stat-label">Listening Time</div>
+        <div class="stat-trend positive">↑ 8% from last week</div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">🎸</div>
+      <div class="stat-content">
+        <div class="stat-value">Rock</div>
+        <div class="stat-label">Top Genre</div>
+        <div class="stat-trend neutral">38% of total plays</div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">🔥</div>
+      <div class="stat-content">
+        <div class="stat-value">14 Days</div>
+        <div class="stat-label">Current Streak</div>
+        <div class="stat-trend positive">Keep it up!</div>
+      </div>
+    </div>
+  </section>
+
   <!-- Content grid -->
   <section class="profile-content">
 
-    <!-- Left -->
+    <!-- Left Column -->
     <div class="left-column">
 
+      <!-- Top Tracks -->
       <div class="card">
-        <h2>Top Playlists</h2>
+        <div class="card-header">
+          <h2>🎧 Top Tracks This Month</h2>
+          <a href="#" class="view-all-link">View all</a>
+        </div>
+
+        <div class="track-list">
+          <div class="track-item">
+            <div class="track-rank">1</div>
+            <div class="track-cover" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+            <div class="track-info">
+              <div class="track-name">Bohemian Rhapsody</div>
+              <div class="track-artist">Queen</div>
+            </div>
+            <div class="track-stats">
+              <span class="play-count">🔊 248 plays</span>
+            </div>
+          </div>
+
+          <div class="track-item">
+            <div class="track-rank">2</div>
+            <div class="track-cover" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+            <div class="track-info">
+              <div class="track-name">Stairway to Heaven</div>
+              <div class="track-artist">Led Zeppelin</div>
+            </div>
+            <div class="track-stats">
+              <span class="play-count">🔊 187 plays</span>
+            </div>
+          </div>
+
+          <div class="track-item">
+            <div class="track-rank">3</div>
+            <div class="track-cover" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
+            <div class="track-info">
+              <div class="track-name">Hotel California</div>
+              <div class="track-artist">Eagles</div>
+            </div>
+            <div class="track-stats">
+              <span class="play-count">🔊 156 plays</span>
+            </div>
+          </div>
+
+          <div class="track-item">
+            <div class="track-rank">4</div>
+            <div class="track-cover" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);"></div>
+            <div class="track-info">
+              <div class="track-name">Sweet Child O' Mine</div>
+              <div class="track-artist">Guns N' Roses</div>
+            </div>
+            <div class="track-stats">
+              <span class="play-count">🔊 142 plays</span>
+            </div>
+          </div>
+
+          <div class="track-item">
+            <div class="track-rank">5</div>
+            <div class="track-cover" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></div>
+            <div class="track-info">
+              <div class="track-name">Comfortably Numb</div>
+              <div class="track-artist">Pink Floyd</div>
+            </div>
+            <div class="track-stats">
+              <span class="play-count">🔊 128 plays</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Playlists -->
+      <div class="card">
+        <div class="card-header">
+          <h2>📚 My Playlists</h2>
+          <a href="#" class="view-all-link">View all</a>
+        </div>
 
         <div class="playlist-grid">
-          <div class="playlist-card">Metal Essentials</div>
-          <div class="playlist-card">Late Night</div>
-          <div class="playlist-card">Old School Rock</div>
+          <div class="playlist-card">
+            <div class="playlist-cover" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+              <div class="playlist-icon">🤘</div>
+            </div>
+            <div class="playlist-info">
+              <div class="playlist-name">Metal Essentials</div>
+              <div class="playlist-meta">87 songs · 6.2h</div>
+            </div>
+          </div>
+
+          <div class="playlist-card">
+            <div class="playlist-cover" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+              <div class="playlist-icon">🌙</div>
+            </div>
+            <div class="playlist-info">
+              <div class="playlist-name">Late Night</div>
+              <div class="playlist-meta">52 songs · 3.8h</div>
+            </div>
+          </div>
+
+          <div class="playlist-card">
+            <div class="playlist-cover" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+              <div class="playlist-icon">🎸</div>
+            </div>
+            <div class="playlist-info">
+              <div class="playlist-name">Old School Rock</div>
+              <div class="playlist-meta">124 songs · 9.1h</div>
+            </div>
+          </div>
+
+          <div class="playlist-card">
+            <div class="playlist-cover" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+              <div class="playlist-icon">☕</div>
+            </div>
+            <div class="playlist-info">
+              <div class="playlist-name">Morning Coffee</div>
+              <div class="playlist-meta">41 songs · 2.7h</div>
+            </div>
+          </div>
+
+          <div class="playlist-card">
+            <div class="playlist-cover" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+              <div class="playlist-icon">🏃</div>
+            </div>
+            <div class="playlist-info">
+              <div class="playlist-name">Workout Hits</div>
+              <div class="playlist-meta">68 songs · 4.5h</div>
+            </div>
+          </div>
+
+          <div class="playlist-card">
+            <div class="playlist-cover" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+              <div class="playlist-icon">🎹</div>
+            </div>
+            <div class="playlist-info">
+              <div class="playlist-name">Piano Classics</div>
+              <div class="playlist-meta">38 songs · 3.2h</div>
+            </div>
+          </div>
         </div>
       </div>
 
     </div>
 
-    <!-- Right -->
+    <!-- Right Column -->
     <div class="right-column">
 
+      <!-- Recently Added -->
       <div class="card">
-        <h2>Recently Added</h2>
+        <div class="card-header">
+          <h2>🕒 Recently Added</h2>
+          <a href="#" class="view-all-link">View all</a>
+        </div>
 
         <div class="song-list">
-          <div class="song-row">Song – Artist</div>
-          <div class="song-row">Song – Artist</div>
-          <div class="song-row">Song – Artist</div>
-          <div class="song-row">Song – Artist</div>
+          <div class="song-row">
+            <div class="song-cover-mini" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+            <div class="song-details">
+              <div class="song-name">November Rain</div>
+              <div class="song-artist">Guns N' Roses</div>
+            </div>
+            <div class="song-time">2h ago</div>
+          </div>
+
+          <div class="song-row">
+            <div class="song-cover-mini" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+            <div class="song-details">
+              <div class="song-name">Nothing Else Matters</div>
+              <div class="song-artist">Metallica</div>
+            </div>
+            <div class="song-time">5h ago</div>
+          </div>
+
+          <div class="song-row">
+            <div class="song-cover-mini" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
+            <div class="song-details">
+              <div class="song-name">Dream On</div>
+              <div class="song-artist">Aerosmith</div>
+            </div>
+            <div class="song-time">1d ago</div>
+          </div>
+
+          <div class="song-row">
+            <div class="song-cover-mini" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);"></div>
+            <div class="song-details">
+              <div class="song-name">Smoke on the Water</div>
+              <div class="song-artist">Deep Purple</div>
+            </div>
+            <div class="song-time">1d ago</div>
+          </div>
+
+          <div class="song-row">
+            <div class="song-cover-mini" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></div>
+            <div class="song-details">
+              <div class="song-name">Black</div>
+              <div class="song-artist">Pearl Jam</div>
+            </div>
+            <div class="song-time">2d ago</div>
+          </div>
         </div>
       </div>
 
+      <!-- Favorite Genres -->
       <div class="card">
-        <h2>Listening Stats</h2>
+        <div class="card-header">
+          <h2>🎭 Favorite Genres</h2>
+        </div>
 
-        <div class="stats-mini">
-          <div>
-            <strong>1,248</strong>
-            <span>Scrobbles</span>
+        <div class="genre-list">
+          <div class="genre-item">
+            <div class="genre-bar">
+              <div class="genre-fill" style="width: 85%; background: var(--color-accent);"></div>
+            </div>
+            <div class="genre-info">
+              <span class="genre-name">Rock</span>
+              <span class="genre-percentage">85%</span>
+            </div>
           </div>
-          <div>
+
+          <div class="genre-item">
+            <div class="genre-bar">
+              <div class="genre-fill" style="width: 68%; background: #667eea;"></div>
+            </div>
+            <div class="genre-info">
+              <span class="genre-name">Metal</span>
+              <span class="genre-percentage">68%</span>
+            </div>
+          </div>
+
+          <div class="genre-item">
+            <div class="genre-bar">
+              <div class="genre-fill" style="width: 52%; background: #f093fb;"></div>
+            </div>
+            <div class="genre-info">
+              <span class="genre-name">Alternative</span>
+              <span class="genre-percentage">52%</span>
+            </div>
+          </div>
+
+          <div class="genre-item">
+            <div class="genre-bar">
+              <div class="genre-fill" style="width: 38%; background: #4facfe;"></div>
+            </div>
+            <div class="genre-info">
+              <span class="genre-name">Classic Rock</span>
+              <span class="genre-percentage">38%</span>
+            </div>
+          </div>
+
+          <div class="genre-item">
+            <div class="genre-bar">
+              <div class="genre-fill" style="width: 24%; background: #43e97b;"></div>
+            </div>
+            <div class="genre-info">
+              <span class="genre-name">Blues</span>
+              <span class="genre-percentage">24%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Listening Stats -->
+      <div class="card">
+        <div class="card-header">
+          <h2>📊 Listening Stats</h2>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-box-icon">🎵</div>
+            <strong>1,248</strong>
+            <span>Total Scrobbles</span>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box-icon">🎤</div>
             <strong>96</strong>
             <span>Artists</span>
           </div>
-          <div>
+          <div class="stat-box">
+            <div class="stat-box-icon">💿</div>
+            <strong>312</strong>
+            <span>Albums</span>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box-icon">🎭</div>
             <strong>34</strong>
             <span>Genres</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Listening Activity -->
+      <div class="card">
+        <div class="card-header">
+          <h2>📈 This Week's Activity</h2>
+        </div>
+
+        <div class="activity-chart">
+          <div class="activity-day">
+            <div class="day-bar" style="height: 65%;">
+              <span class="bar-value">42</span>
+            </div>
+            <span class="day-label">Mon</span>
+          </div>
+          <div class="activity-day">
+            <div class="day-bar" style="height: 85%;">
+              <span class="bar-value">58</span>
+            </div>
+            <span class="day-label">Tue</span>
+          </div>
+          <div class="activity-day">
+            <div class="day-bar" style="height: 45%;">
+              <span class="bar-value">31</span>
+            </div>
+            <span class="day-label">Wed</span>
+          </div>
+          <div class="activity-day">
+            <div class="day-bar" style="height: 92%;">
+              <span class="bar-value">67</span>
+            </div>
+            <span class="day-label">Thu</span>
+          </div>
+          <div class="activity-day">
+            <div class="day-bar" style="height: 78%;">
+              <span class="bar-value">52</span>
+            </div>
+            <span class="day-label">Fri</span>
+          </div>
+          <div class="activity-day">
+            <div class="day-bar" style="height: 100%;">
+              <span class="bar-value">74</span>
+            </div>
+            <span class="day-label">Sat</span>
+          </div>
+          <div class="activity-day">
+            <div class="day-bar" style="height: 88%;">
+              <span class="bar-value">61</span>
+            </div>
+            <span class="day-label">Sun</span>
           </div>
         </div>
       </div>
