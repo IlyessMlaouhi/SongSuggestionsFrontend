@@ -5,270 +5,346 @@
     <p>Search songs, build playlists, and explore your taste.</p>
   </header>
 
-  <!-- Search -->
-  <div class="search-box">
-    <input
-      type="text"
-      placeholder="Search by song, artist, or mood..."
-    />
-    <button>Search</button>
+  <!-- Search with Autocomplete -->
+  <div class="search-wrapper">
+    <div class="search-box">
+      <input
+        type="text"
+        placeholder="Search by song, artist, or mood..."
+        [(ngModel)]="searchQuery"
+        (input)="onSearchInput($event)"
+        (focus)="showDropdown = autocompleteSuggestions.length > 0"
+      />
+      <button (click)="onSearchClick()" [disabled]="isLoading">
+        {{ isLoading ? 'Searching...' : 'Search' }}
+      </button>
+      <button
+        *ngIf="searchQuery.length > 0"
+        class="clear-btn"
+        (click)="clearSearch()"
+      >
+        ✕
+      </button>
+    </div>
+
+    <!-- Autocomplete Dropdown -->
+    <div class="autocomplete-dropdown" *ngIf="showDropdown && !hasSearched">
+      <div
+        class="dropdown-item"
+        *ngFor="let song of autocompleteSuggestions"
+        (click)="onSuggestionClick(song)"
+      >
+        <div class="dropdown-icon">🎵</div>
+        <div class="dropdown-content">
+          <div class="dropdown-title">{{ song.name }}</div>
+          <div class="dropdown-artist">{{ song.artist || 'Unknown Artist' }}</div>
+        </div>
+        <div class="dropdown-arrow">→</div>
+      </div>
+
+      <div class="dropdown-footer" *ngIf="autocompleteSuggestions.length > 0">
+        <span>Press Enter or click Search to see all results</span>
+      </div>
+    </div>
   </div>
 
-  <!-- Stats Bar -->
-  <div class="stats-bar">
-    <div class="stat-item">
-      <div class="stat-number">2.4M+</div>
-      <div class="stat-label">Songs</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number">850K+</div>
-      <div class="stat-label">Artists</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number">1.2M+</div>
-      <div class="stat-label">Playlists</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number">Active</div>
-      <div class="stat-label">Community</div>
-    </div>
+  <!-- Loading State (only when clicking Search button) -->
+  <div class="search-status" *ngIf="isLoading && hasSearched">
+    <div class="loading-spinner"></div>
+    <p>Searching for "{{ searchQuery }}"...</p>
   </div>
 
-  <!-- Trending Now -->
-  <section class="trending-section">
+  <!-- Search Results Section (only shown after clicking Search button) -->
+  <section class="search-results-section" *ngIf="hasSearched && !isLoading">
     <div class="section-header">
-      <h2>🔥 Trending Now</h2>
-      <a href="#" class="view-all">View all</a>
+      <h2>🔍 Search Results for "{{ searchQuery }}"</h2>
+      <span class="result-count" *ngIf="searchResults.length > 0">
+        {{ searchResults.length }} song{{ searchResults.length === 1 ? '' : 's' }} found
+      </span>
     </div>
 
-    <div class="trending-grid">
-      <div class="song-card">
-        <div class="song-cover" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-          <div class="play-button">▶</div>
-        </div>
-        <div class="song-info">
-          <div class="song-title">Blinding Lights</div>
-          <div class="song-artist">The Weeknd</div>
-          <div class="song-stats">
-            <span>❤️ 1.2M</span>
-            <span>▶ 3.4M</span>
-          </div>
-        </div>
-      </div>
+    <!-- No Results -->
+    <div class="no-results" *ngIf="searchResults.length === 0">
+      <div class="no-results-icon">🎵</div>
+      <h3>No songs found</h3>
+      <p>Try searching with different keywords or check your spelling</p>
+    </div>
 
-      <div class="song-card">
-        <div class="song-cover" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+    <!-- Results Grid (Cards) -->
+    <div class="results-grid" *ngIf="searchResults.length > 0">
+      <div class="song-card" *ngFor="let song of searchResults; let i = index">
+        <div class="song-cover" [style.background]="getGradient(i)">
           <div class="play-button">▶</div>
         </div>
         <div class="song-info">
-          <div class="song-title">Levitating</div>
-          <div class="song-artist">Dua Lipa</div>
-          <div class="song-stats">
-            <span>❤️ 980K</span>
-            <span>▶ 2.8M</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="song-card">
-        <div class="song-cover" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-          <div class="play-button">▶</div>
-        </div>
-        <div class="song-info">
-          <div class="song-title">Starboy</div>
-          <div class="song-artist">The Weeknd ft. Daft Punk</div>
-          <div class="song-stats">
-            <span>❤️ 1.5M</span>
-            <span>▶ 4.2M</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="song-card">
-        <div class="song-cover" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
-          <div class="play-button">▶</div>
-        </div>
-        <div class="song-info">
-          <div class="song-title">Anti-Hero</div>
-          <div class="song-artist">Taylor Swift</div>
-          <div class="song-stats">
-            <span>❤️ 2.1M</span>
-            <span>▶ 5.7M</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="song-card">
-        <div class="song-cover" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
-          <div class="play-button">▶</div>
-        </div>
-        <div class="song-info">
-          <div class="song-title">As It Was</div>
-          <div class="song-artist">Harry Styles</div>
-          <div class="song-stats">
-            <span>❤️ 1.8M</span>
-            <span>▶ 4.9M</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="song-card">
-        <div class="song-cover" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);">
-          <div class="play-button">▶</div>
-        </div>
-        <div class="song-info">
-          <div class="song-title">Flowers</div>
-          <div class="song-artist">Miley Cyrus</div>
-          <div class="song-stats">
-            <span>❤️ 1.6M</span>
-            <span>▶ 3.9M</span>
+          <div class="song-title">{{ song.name }}</div>
+          <div class="song-artist">{{ song.artist || 'Unknown Artist' }}</div>
+          <div class="song-stats" *ngIf="song.album">
+            <span>💿 {{ song.album }}</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Top Artists -->
-  <section class="artists-section">
-    <div class="section-header">
-      <h2>⭐ Top Artists This Week</h2>
-      <a href="#" class="view-all">View all</a>
-    </div>
-
-    <div class="artists-grid">
-      <div class="artist-card">
-        <div class="artist-avatar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">TW</div>
-        <div class="artist-name">The Weeknd</div>
-        <div class="artist-plays">12.4M plays</div>
+  <!-- Default Content (shown when no search has been made) -->
+  <ng-container *ngIf="!hasSearched">
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-number">2.4M+</div>
+        <div class="stat-label">Songs</div>
       </div>
-
-      <div class="artist-card">
-        <div class="artist-avatar" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">DL</div>
-        <div class="artist-name">Dua Lipa</div>
-        <div class="artist-plays">9.8M plays</div>
+      <div class="stat-item">
+        <div class="stat-number">850K+</div>
+        <div class="stat-label">Artists</div>
       </div>
-
-      <div class="artist-card">
-        <div class="artist-avatar" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">TS</div>
-        <div class="artist-name">Taylor Swift</div>
-        <div class="artist-plays">15.2M plays</div>
+      <div class="stat-item">
+        <div class="stat-number">1.2M+</div>
+        <div class="stat-label">Playlists</div>
       </div>
-
-      <div class="artist-card">
-        <div class="artist-avatar" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">HS</div>
-        <div class="artist-name">Harry Styles</div>
-        <div class="artist-plays">11.1M plays</div>
-      </div>
-
-      <div class="artist-card">
-        <div class="artist-avatar" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">BE</div>
-        <div class="artist-name">Billie Eilish</div>
-        <div class="artist-plays">10.5M plays</div>
-      </div>
-
-      <div class="artist-card">
-        <div class="artist-avatar" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">DP</div>
-        <div class="artist-name">Daft Punk</div>
-        <div class="artist-plays">8.7M plays</div>
+      <div class="stat-item">
+        <div class="stat-number">Active</div>
+        <div class="stat-label">Community</div>
       </div>
     </div>
-  </section>
 
-  <!-- Curated Playlists -->
-  <section class="playlists-section">
-    <div class="section-header">
-      <h2>🎧 Curated Playlists</h2>
-      <a href="#" class="view-all">View all</a>
+    <!-- Trending Now -->
+    <section class="trending-section">
+      <div class="section-header">
+        <h2>🔥 Trending Now</h2>
+        <a href="#" class="view-all">View all</a>
+      </div>
+
+      <div class="trending-grid">
+        <div class="song-card">
+          <div class="song-cover" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <div class="play-button">▶</div>
+          </div>
+          <div class="song-info">
+            <div class="song-title">Blinding Lights</div>
+            <div class="song-artist">The Weeknd</div>
+            <div class="song-stats">
+              <span>❤️ 1.2M</span>
+              <span>▶ 3.4M</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="song-card">
+          <div class="song-cover" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+            <div class="play-button">▶</div>
+          </div>
+          <div class="song-info">
+            <div class="song-title">Levitating</div>
+            <div class="song-artist">Dua Lipa</div>
+            <div class="song-stats">
+              <span>❤️ 980K</span>
+              <span>▶ 2.8M</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="song-card">
+          <div class="song-cover" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+            <div class="play-button">▶</div>
+          </div>
+          <div class="song-info">
+            <div class="song-title">Starboy</div>
+            <div class="song-artist">The Weeknd ft. Daft Punk</div>
+            <div class="song-stats">
+              <span>❤️ 1.5M</span>
+              <span>▶ 4.2M</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="song-card">
+          <div class="song-cover" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+            <div class="play-button">▶</div>
+          </div>
+          <div class="song-info">
+            <div class="song-title">Anti-Hero</div>
+            <div class="song-artist">Taylor Swift</div>
+            <div class="song-stats">
+              <span>❤️ 2.1M</span>
+              <span>▶ 5.7M</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="song-card">
+          <div class="song-cover" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+            <div class="play-button">▶</div>
+          </div>
+          <div class="song-info">
+            <div class="song-title">As It Was</div>
+            <div class="song-artist">Harry Styles</div>
+            <div class="song-stats">
+              <span>❤️ 1.8M</span>
+              <span>▶ 4.9M</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="song-card">
+          <div class="song-cover" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);">
+            <div class="play-button">▶</div>
+          </div>
+          <div class="song-info">
+            <div class="song-title">Flowers</div>
+            <div class="song-artist">Miley Cyrus</div>
+            <div class="song-stats">
+              <span>❤️ 1.6M</span>
+              <span>▶ 3.9M</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Top Artists -->
+    <section class="artists-section">
+      <div class="section-header">
+        <h2>⭐ Top Artists This Week</h2>
+        <a href="#" class="view-all">View all</a>
+      </div>
+
+      <div class="artists-grid">
+        <div class="artist-card">
+          <div class="artist-avatar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">TW</div>
+          <div class="artist-name">The Weeknd</div>
+          <div class="artist-plays">12.4M plays</div>
+        </div>
+
+        <div class="artist-card">
+          <div class="artist-avatar" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">DL</div>
+          <div class="artist-name">Dua Lipa</div>
+          <div class="artist-plays">9.8M plays</div>
+        </div>
+
+        <div class="artist-card">
+          <div class="artist-avatar" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">TS</div>
+          <div class="artist-name">Taylor Swift</div>
+          <div class="artist-plays">15.2M plays</div>
+        </div>
+
+        <div class="artist-card">
+          <div class="artist-avatar" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">HS</div>
+          <div class="artist-name">Harry Styles</div>
+          <div class="artist-plays">11.1M plays</div>
+        </div>
+
+        <div class="artist-card">
+          <div class="artist-avatar" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">BE</div>
+          <div class="artist-name">Billie Eilish</div>
+          <div class="artist-plays">10.5M plays</div>
+        </div>
+
+        <div class="artist-card">
+          <div class="artist-avatar" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">DP</div>
+          <div class="artist-name">Daft Punk</div>
+          <div class="artist-plays">8.7M plays</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Curated Playlists -->
+    <section class="playlists-section">
+      <div class="section-header">
+        <h2>🎧 Curated Playlists</h2>
+        <a href="#" class="view-all">View all</a>
+      </div>
+
+      <div class="playlists-grid">
+        <div class="playlist-card">
+          <div class="playlist-cover" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <div class="playlist-icon">🌙</div>
+          </div>
+          <div class="playlist-info">
+            <div class="playlist-title">Midnight Vibes</div>
+            <div class="playlist-meta">48 songs · 3.2h</div>
+          </div>
+        </div>
+
+        <div class="playlist-card">
+          <div class="playlist-cover" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+            <div class="playlist-icon">💪</div>
+          </div>
+          <div class="playlist-info">
+            <div class="playlist-title">Workout Energy</div>
+            <div class="playlist-meta">62 songs · 4.1h</div>
+          </div>
+        </div>
+
+        <div class="playlist-card">
+          <div class="playlist-cover" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+            <div class="playlist-icon">☕</div>
+          </div>
+          <div class="playlist-info">
+            <div class="playlist-title">Morning Coffee</div>
+            <div class="playlist-meta">35 songs · 2.4h</div>
+          </div>
+        </div>
+
+        <div class="playlist-card">
+          <div class="playlist-cover" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+            <div class="playlist-icon">🚗</div>
+          </div>
+          <div class="playlist-info">
+            <div class="playlist-title">Road Trip</div>
+            <div class="playlist-meta">71 songs · 5.3h</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recent Activity -->
+    <section class="activity-section">
+      <div class="section-header">
+        <h2>📊 Recent Activity</h2>
+      </div>
+
+      <div class="activity-list">
+        <div class="activity-item">
+          <div class="activity-avatar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">JD</div>
+          <div class="activity-content">
+            <div class="activity-text"><strong>John Doe</strong> added <strong>Save Your Tears</strong> to <em>Favorites</em></div>
+            <div class="activity-time">2 minutes ago</div>
+          </div>
+        </div>
+
+        <div class="activity-item">
+          <div class="activity-avatar" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">SK</div>
+          <div class="activity-content">
+            <div class="activity-text"><strong>Sarah Kim</strong> created a new playlist <em>Summer Hits 2024</em></div>
+            <div class="activity-time">15 minutes ago</div>
+          </div>
+        </div>
+
+        <div class="activity-item">
+          <div class="activity-avatar" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">MP</div>
+          <div class="activity-content">
+            <div class="activity-text"><strong>Mike Park</strong> liked <strong>Blinding Lights</strong></div>
+            <div class="activity-time">1 hour ago</div>
+          </div>
+        </div>
+
+        <div class="activity-item">
+          <div class="activity-avatar" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">AL</div>
+          <div class="activity-content">
+            <div class="activity-text"><strong>Amy Lopez</strong> followed <strong>The Weeknd</strong></div>
+            <div class="activity-time">3 hours ago</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Create playlist CTA -->
+    <div class="playlist-create">
+      <span>Ready to create your own collection?</span>
+      <button>Create Playlist</button>
     </div>
-
-    <div class="playlists-grid">
-      <div class="playlist-card">
-        <div class="playlist-cover" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-          <div class="playlist-icon">🌙</div>
-        </div>
-        <div class="playlist-info">
-          <div class="playlist-title">Midnight Vibes</div>
-          <div class="playlist-meta">48 songs · 3.2h</div>
-        </div>
-      </div>
-
-      <div class="playlist-card">
-        <div class="playlist-cover" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-          <div class="playlist-icon">💪</div>
-        </div>
-        <div class="playlist-info">
-          <div class="playlist-title">Workout Energy</div>
-          <div class="playlist-meta">62 songs · 4.1h</div>
-        </div>
-      </div>
-
-      <div class="playlist-card">
-        <div class="playlist-cover" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-          <div class="playlist-icon">☕</div>
-        </div>
-        <div class="playlist-info">
-          <div class="playlist-title">Morning Coffee</div>
-          <div class="playlist-meta">35 songs · 2.4h</div>
-        </div>
-      </div>
-
-      <div class="playlist-card">
-        <div class="playlist-cover" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
-          <div class="playlist-icon">🚗</div>
-        </div>
-        <div class="playlist-info">
-          <div class="playlist-title">Road Trip</div>
-          <div class="playlist-meta">71 songs · 5.3h</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Recent Activity -->
-  <section class="activity-section">
-    <div class="section-header">
-      <h2>📊 Recent Activity</h2>
-    </div>
-
-    <div class="activity-list">
-      <div class="activity-item">
-        <div class="activity-avatar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">JD</div>
-        <div class="activity-content">
-          <div class="activity-text"><strong>John Doe</strong> added <strong>Save Your Tears</strong> to <em>Favorites</em></div>
-          <div class="activity-time">2 minutes ago</div>
-        </div>
-      </div>
-
-      <div class="activity-item">
-        <div class="activity-avatar" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">SK</div>
-        <div class="activity-content">
-          <div class="activity-text"><strong>Sarah Kim</strong> created a new playlist <em>Summer Hits 2024</em></div>
-          <div class="activity-time">15 minutes ago</div>
-        </div>
-      </div>
-
-      <div class="activity-item">
-        <div class="activity-avatar" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">MP</div>
-        <div class="activity-content">
-          <div class="activity-text"><strong>Mike Park</strong> liked <strong>Blinding Lights</strong></div>
-          <div class="activity-time">1 hour ago</div>
-        </div>
-      </div>
-
-      <div class="activity-item">
-        <div class="activity-avatar" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">AL</div>
-        <div class="activity-content">
-          <div class="activity-text"><strong>Amy Lopez</strong> followed <strong>The Weeknd</strong></div>
-          <div class="activity-time">3 hours ago</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Create playlist CTA -->
-  <div class="playlist-create">
-    <span>Ready to create your own collection?</span>
-    <button>Create Playlist</button>
-  </div>
+  </ng-container>
 
 </section>

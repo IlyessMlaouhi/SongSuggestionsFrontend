@@ -410,7 +410,7 @@
   color: var(--color-text-muted);
 }
 
-/* Song List */
+/* SongDto List */
 .song-list {
   display: flex;
   flex-direction: column;
@@ -1023,7 +1023,7 @@
   font-size: 0.85rem;
 }
 
-/* Song List */
+/* SongDto List */
 .song-list {
   display: flex;
   flex-direction: column;
