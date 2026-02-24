@@ -692,4 +692,205 @@
   font-size: 0.8rem;
 }
 
-/* Trending Section */
+/* Add to Playlist Button */
+.add-to-playlist-btn {
+  width: 100%;
+  margin-top: 0.75rem;
+  padding: 0.65rem;
+  background: transparent;
+  border: 1px solid var(--color-accent);
+  border-radius: 6px;
+  color: var(--color-accent);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.add-to-playlist-btn:hover {
+  background: var(--color-accent);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Playlist Modal Overlay */
+.playlist-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Playlist Modal */
+.playlist-modal {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow: hidden;
+  animation: slideUp 0.3s ease;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Modal Header */
+.playlist-modal-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.playlist-modal-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text-main);
+}
+
+.modal-close-btn {
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  color: var(--color-text-muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-close-btn:hover {
+  background: var(--color-bg-elevated);
+  border-color: var(--color-accent);
+  color: var(--color-text-main);
+}
+
+/* Playlist List */
+.playlist-list {
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.playlist-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.playlist-item:hover {
+  border-color: var(--color-accent);
+  transform: translateX(4px);
+  background: var(--color-bg-main);
+}
+
+.playlist-item-icon {
+  width: 45px;
+  height: 45px;
+  background: rgba(176, 0, 32, 0.1);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.playlist-item-info {
+  flex: 1;
+}
+
+.playlist-item-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--color-text-main);
+  margin-bottom: 0.25rem;
+}
+
+.playlist-item-count {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.playlist-item-arrow {
+  color: var(--color-text-muted);
+  font-size: 1.2rem;
+  transition: transform 0.2s ease;
+}
+
+.playlist-item:hover .playlist-item-arrow {
+  transform: translateX(4px);
+  color: var(--color-accent);
+}
+
+/* Create New Playlist Button */
+.create-new-playlist-btn {
+  width: calc(100% - 2rem);
+  margin: 1rem;
+  padding: 0.875rem;
+  background: var(--color-accent);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.create-new-playlist-btn:hover {
+  background: var(--color-accent-hover);
+  transform: translateY(-2px);
+}
+
+/* Scrollbar Styling */
+.playlist-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.playlist-list::-webkit-scrollbar-track {
+  background: var(--color-bg-secondary);
+}
+
+.playlist-list::-webkit-scrollbar-thumb {
+  background: var(--color-bg-elevated);
+  border-radius: 4px;
+}
+
+.playlist-list::-webkit-scrollbar-thumb:hover {
+  background: var(--border-subtle);
+}

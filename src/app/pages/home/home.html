@@ -69,8 +69,6 @@
       <h3>No songs found</h3>
       <p>Try searching with different keywords or check your spelling</p>
     </div>
-
-    <!-- Results Grid (Cards) -->
     <div class="results-grid" *ngIf="searchResults.length > 0">
       <div class="song-card" *ngFor="let song of searchResults; let i = index">
         <div class="song-cover" [style.background]="getGradient(i)">
@@ -82,14 +80,46 @@
           <div class="song-stats" *ngIf="song.album">
             <span>💿 {{ song.album }}</span>
           </div>
+
+          <!-- Add to Playlist Button -->
+          <button class="add-to-playlist-btn" (click)="openPlaylistSelector(song)">
+            ➕ Add to Playlist
+          </button>
         </div>
+      </div>
+    </div>
+
+    <!-- Playlist Selector Modal -->
+    <div class="playlist-modal-overlay" *ngIf="showPlaylistModal" (click)="closePlaylistSelector()">
+      <div class="playlist-modal" (click)="$event.stopPropagation()">
+        <div class="playlist-modal-header">
+          <h3>Add "{{ selectedSong?.name }}" to Playlist</h3>
+          <button class="modal-close-btn" (click)="closePlaylistSelector()">✕</button>
+        </div>
+
+        <div class="playlist-list">
+          <div
+            class="playlist-item"
+            *ngFor="let playlist of userPlaylists"
+            (click)="addSongToPlaylist(playlist)"
+          >
+            <div class="playlist-item-icon">🎧</div>
+            <div class="playlist-item-info">
+              <div class="playlist-item-name">{{ playlist.name }}</div>
+              <div class="playlist-item-count">{{ playlist.songCount }} songs</div>
+            </div>
+            <div class="playlist-item-arrow">→</div>
+          </div>
+        </div>
+
+        <button class="create-new-playlist-btn" (click)="createNewPlaylist()">
+          ➕ Create New Playlist
+        </button>
       </div>
     </div>
   </section>
 
-  <!-- Default Content (shown when no search has been made) -->
   <ng-container *ngIf="!hasSearched">
-    <!-- Stats Bar -->
     <div class="stats-bar">
       <div class="stat-item">
         <div class="stat-number">2.4M+</div>
@@ -109,7 +139,6 @@
       </div>
     </div>
 
-    <!-- Trending Now -->
     <section class="trending-section">
       <div class="section-header">
         <h2>🔥 Trending Now</h2>
@@ -203,7 +232,6 @@
       </div>
     </section>
 
-    <!-- Top Artists -->
     <section class="artists-section">
       <div class="section-header">
         <h2>⭐ Top Artists This Week</h2>
@@ -249,7 +277,6 @@
       </div>
     </section>
 
-    <!-- Curated Playlists -->
     <section class="playlists-section">
       <div class="section-header">
         <h2>🎧 Curated Playlists</h2>

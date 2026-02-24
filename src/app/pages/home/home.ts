@@ -19,11 +19,15 @@ import {NgForOf, NgIf} from '@angular/common';
 export class Home implements OnInit, OnDestroy {
 
   searchQuery = '';
-  searchResults: any[] = []; // Full results shown after clicking Search button
-  autocompleteSuggestions: any[] = []; // Dropdown suggestions while typing
+  searchResults: any[] = [];
+  autocompleteSuggestions: any[] = [];
   isLoading = false;
-  hasSearched = false; // True after clicking Search button
-  showDropdown = false; // Controls dropdown visibility
+  hasSearched = false;
+  showDropdown = false;
+  showPlaylistModal :boolean = false;
+  selectedSong: any = null;
+  userPlaylists: any[] = [];
+
 
   private searchSubject = new Subject<string>();
   private searchSubscription?: Subscription;
@@ -31,10 +35,10 @@ export class Home implements OnInit, OnDestroy {
   constructor(private songService: SongService) {}
 
   ngOnInit() {
-    // Real-time autocomplete (for dropdown only)
     this.searchSubscription = this.searchSubject.pipe(
-      debounceTime(300), // Faster for autocomplete
+      debounceTime(300),
       distinctUntilChanged(),
+
       switchMap((query: string) => {
         if (query.trim().length === 0) {
           this.autocompleteSuggestions = [];
@@ -42,7 +46,6 @@ export class Home implements OnInit, OnDestroy {
           return of([]);
         }
 
-        // Only show dropdown for autocomplete, not full results
         if (query.trim().length >= 2) {
           this.isLoading = true;
           return this.songService.searchSongs(query);
@@ -52,7 +55,6 @@ export class Home implements OnInit, OnDestroy {
       })
     ).subscribe({
       next: (results) => {
-        // Limit autocomplete suggestions to 6 items
         this.autocompleteSuggestions = (results || []).slice(0, 6);
         this.showDropdown = this.autocompleteSuggestions.length > 0 && !this.hasSearched;
         this.isLoading = false;
@@ -75,16 +77,15 @@ export class Home implements OnInit, OnDestroy {
   onSearchInput(event: Event) {
     const query = (event.target as HTMLInputElement).value;
     this.searchQuery = query;
-    this.hasSearched = false; // Reset when typing
+    this.hasSearched = false;
     this.searchSubject.next(query);
   }
 
-  // Called when clicking the Search button
   onSearchClick() {
     if (this.searchQuery.trim().length > 0) {
       this.isLoading = true;
       this.hasSearched = true;
-      this.showDropdown = false; // Hide dropdown when showing full results
+      this.showDropdown = false;
 
       this.songService.searchSongs(this.searchQuery).subscribe({
         next: (results) => {
@@ -101,11 +102,10 @@ export class Home implements OnInit, OnDestroy {
     }
   }
 
-  // Called when clicking a suggestion in the dropdown
   onSuggestionClick(song: any) {
     this.searchQuery = song.name;
     this.showDropdown = false;
-    this.onSearchClick(); // Trigger full search
+    this.onSearchClick();
   }
 
   clearSearch() {
@@ -117,12 +117,10 @@ export class Home implements OnInit, OnDestroy {
     this.showDropdown = false;
   }
 
-  // Close dropdown when clicking outside
   onClickOutside() {
     this.showDropdown = false;
   }
 
-  // Helper method to generate gradient colors for search results
   getGradient(index: number): string {
     const gradients = [
       'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -136,4 +134,49 @@ export class Home implements OnInit, OnDestroy {
     ];
     return gradients[index % gradients.length];
   }
+
+  openPlaylistSelector(song: any) {
+    this.selectedSong = song;
+    this.showPlaylistModal = true;
+    this.fetchPlaylists(); // Call mocked playlists for now
+  }
+
+  closePlaylistSelector() {
+    this.showPlaylistModal = false;
+    this.selectedSong = null;
+  }
+
+  fetchPlaylists() {
+    // MOCKED DATA - Replace this later with real API call
+    this.userPlaylists = [
+      { id: 1, name: 'Favorites', songCount: 42 },
+      { id: 2, name: 'Workout Mix', songCount: 28 },
+      { id: 3, name: 'Chill Vibes', songCount: 35 },
+      { id: 4, name: 'Party Hits', songCount: 51 },
+      { id: 5, name: 'Study Focus', songCount: 19 },
+    ];
+  }
+
+  addSongToPlaylist(playlist: any) {
+    console.log(`Adding "${this.selectedSong.name}" to "${playlist.name}"`);
+
+    // TODO: Later replace with actual API call
+    // this.playlistService.addSong(playlist.id, this.selectedSong.id).subscribe(...)
+
+    // Show success message (you can add a toast notification here)
+    alert(`Added "${this.selectedSong.name}" to "${playlist.name}"!`);
+
+    this.closePlaylistSelector();
+  }
+
+  createNewPlaylist() {
+    console.log('Create new playlist clicked');
+
+    // TODO: Later you can navigate to create playlist page or show another modal
+    alert('Create New Playlist feature - Coming soon!');
+
+    this.closePlaylistSelector();
+  }
+
+
 }
